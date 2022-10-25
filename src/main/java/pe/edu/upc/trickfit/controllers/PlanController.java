@@ -8,6 +8,36 @@ import pe.edu.upc.trickfit.servicesinterfaces.IPlanService;
 import java.util.List;
 
 @RestController
-@RequestMapping("7planes")
+@RequestMapping("/planes")
 public class PlanController {
+    @Autowired
+    private IPlanService pService;
+
+    @PostMapping
+    public void registrar(@RequestBody Plan p) {
+        pService.insert(p);
+    }
+
+    @GetMapping
+    public List<Plan> listar() {
+        return pService.list();
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable("id") Integer id){
+        pService.delete(id);
+    }
+
+    @PutMapping
+    public void modificar(@RequestBody Plan plan){
+        pService.insert(plan);
+    }
+
+    @PostMapping("/buscar")
+    public List<Plan>buscar(@RequestBody Plan plan){
+        List<Plan>lista;
+        plan.setNamePlan(plan.getNamePlan());
+        lista=pService.search(plan.getNamePlan());
+        return lista;
+    }
 }
