@@ -10,4 +10,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/recetas")
 public class RecetaController {
+    @Autowired
+    private IRecetaService pService;
+
+    @PostMapping
+    public void registrar(@RequestBody Receta r) {
+        pService.insert(r);
+    }
+
+    @GetMapping
+    public List<Receta> listar() {
+        return pService.list();
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable("id") Integer id) {
+        pService.delete(id);
+    }
+
+    @PutMapping
+    public void modificar(@RequestBody Receta receta) {
+        pService.insert(receta);
+    }
+
+    @PostMapping("/buscar")
+    public List<Receta> buscar(@RequestBody Receta receta) {
+        List<Receta> lista;
+        receta.setTituloReceta(receta.getTituloReceta());
+        lista = pService.search(receta.getTituloReceta());
+        return lista;
+    }
 }
